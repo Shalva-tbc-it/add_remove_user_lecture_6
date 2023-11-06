@@ -6,11 +6,13 @@ import android.util.Log.d
 import android.util.Log.e
 import android.widget.EditText
 import android.widget.Toast
+import com.example.addremoveuser.adapter.UsersAdapter
 import com.example.addremoveuser.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var adapter: UsersAdapter
     private lateinit var isUser: User
     private var activeUsersNum: Int = 0
     private var deletedUsersNum: Int = 0
@@ -90,12 +92,12 @@ class MainActivity : AppCompatActivity() {
         return users.contains(email)
     }
 
-    // Удаление пользователя
+    // delete user
     private fun removeUser(email: String) {
         users.remove(email)
     }
 
-    //    // Обновление данных пользователя
+    //    update user
     fun updateUser(email: String, user: User) {
         if (users.contains(email)) {
             users.remove(email)
