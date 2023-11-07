@@ -5,13 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
-    tools:context=".UpdateActivity">
+    android:background="@drawable/first_bg"
+    tools:context=".RemoveUpdateActivity">
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/edFirstName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:textColor="@color/black"
+        android:fontFamily="sans-serif-medium"
         android:background="@drawable/ed_corner"
         android:hint="@string/first_name"
         android:padding="10dp"
@@ -26,6 +29,8 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/ed_corner"
         android:hint="@string/last_name"
+        android:textColor="@color/black"
+        android:fontFamily="sans-serif-medium"
         android:padding="10dp"
         android:textColorHint="@color/black"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,6 +42,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@drawable/ed_corner"
+        android:textColor="@color/black"
+        android:inputType="number"
+        android:maxLength="2"
+        android:fontFamily="sans-serif-medium"
         android:hint="@string/age"
         android:padding="10dp"
         android:textColorHint="@color/black"
@@ -49,6 +58,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@drawable/ed_corner"
+        android:textColor="@color/black"
+        android:fontFamily="sans-serif-medium"
         android:hint="@string/email"
         android:padding="10dp"
         android:textColorHint="@color/black"
@@ -56,22 +67,29 @@
         app:layout_constraintTop_toBottomOf="@+id/edAge" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnRemoveUser"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/remove_user"
-        app:layout_constraintBottom_toTopOf="@+id/btnUpdateUser"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnUpdateUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/update_user"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:fontFamily="sans-serif-medium"
+        app:layout_constraintBottom_toTopOf="@+id/btnRemoveUser"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnRemoveUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/remove_user"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:fontFamily="sans-serif-medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

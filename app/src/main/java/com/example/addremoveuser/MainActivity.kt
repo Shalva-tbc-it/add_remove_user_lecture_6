@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.addremoveuser.adapter.UsersAdapter
 import com.example.addremoveuser.databinding.ActivityMainBinding
@@ -36,16 +35,19 @@ class MainActivity : AppCompatActivity() {
                 adapter.setData(users.values.toList())
                 activeUsersNum--
                 deletedUsersNum++
-                binding.tvActiveUser.text = getString(R.string.active_users) + activeUsersNum
-                binding.tvDeleteUser.text = getString(R.string.deleted_users) + deletedUsersNum
+                binding.tvActiveUser.text = getString(R.string.active_users) + " " + activeUsersNum
+                binding.tvDeleteUser.text = getString(R.string.deleted_users) + " " + deletedUsersNum
                 binding.tvTitle.text = getString(R.string.success)
                 binding.tvTitle.setTextColor(Color.GREEN)
+                Toast.makeText(this, "User deleted successfully", Toast.LENGTH_LONG).show()
 
             }else{
                 user?.let { updateUser(it.id, user) }
                 adapter.setData(users.values.toList())
                 binding.tvTitle.text = getString(R.string.success)
                 binding.tvTitle.setTextColor(Color.GREEN)
+                Toast.makeText(this, "User updated successfully", Toast.LENGTH_LONG).show()
+
             }
         }
     }
@@ -66,9 +68,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUp() {
+        binding.tvActiveUser.text = getString(R.string.active_users) + " " + activeUsersNum
+        binding.tvDeleteUser.text = getString(R.string.deleted_users) + " " + deletedUsersNum
         val usersRecyclerView = binding.rvList
         adapter = UsersAdapter(listener = {user ->
-            val intent = Intent(this, UpdateActivity::class.java).apply {
+            val intent = Intent(this, RemoveUpdateActivity::class.java).apply {
                 putExtra("clickedUser", user)
             }
             startForResult.launch(intent)
@@ -81,14 +85,20 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             btnAddUser.setOnClickListener {
                 saveUsers()
-                if (checkUser(isUser)) {
+
+                if (edFirstName.text.isNullOrEmpty() || edLastName.text.isNullOrEmpty() || edAge.text.isNullOrEmpty() || edEmail.text.isNullOrEmpty() ) {
                     binding.tvTitle.text = getString(R.string.error)
                     binding.tvTitle.setTextColor(Color.RED)
-                    Toast.makeText(this@MainActivity, "error", Toast.LENGTH_LONG).show()
-                } else {
-                    addUser(isUser.id, isUser)
-                    adapter.setData(users.values.toList())
-
+                }else {
+                    if (checkUser(isUser)) {
+                        binding.tvTitle.text = getString(R.string.error)
+                        binding.tvTitle.setTextColor(Color.RED)
+                        Toast.makeText(this@MainActivity, "User already exists", Toast.LENGTH_LONG).show()
+                    } else {
+                        addUser(isUser.id, isUser)
+                        adapter.setData(users.values.toList())
+                        Toast.makeText(this@MainActivity, "User added successfully", Toast.LENGTH_LONG).show()
+                    }
                 }
             }
         }
@@ -100,12 +110,13 @@ class MainActivity : AppCompatActivity() {
         val age = binding.edAge.text
         val email = binding.edEmail.text
         isUser = User(
-            firstName = firstname.toString(),
-            lastName = lastname.toString(),
-            age = age.toString(),
-            email = email.toString()
+            firstName = removeSpaces(firstname.toString()),
+            lastName = removeSpaces(lastname.toString()),
+            age = removeSpaces(age.toString()),
+            email = removeSpaces(email.toString())
         )
     }
+
 
     private fun addUser(id: UUID, user: User) {
         users.put(id, user)
@@ -131,6 +142,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
+    private fun removeSpaces(input: String): String {
+        return input.replace(" ", "")
+    }
 
 }

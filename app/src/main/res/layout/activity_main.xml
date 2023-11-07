@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_gb"
+    android:background="@drawable/second_bg"
     android:padding="20dp"
     tools:context=".MainActivity">
 
@@ -13,7 +13,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
-        android:text="@string/title"
         android:textColor="@color/black"
         android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,6 +27,8 @@
         android:background="@drawable/ed_corner"
         android:hint="@string/first_name"
         android:padding="10dp"
+        android:textColor="@color/black"
+        android:fontFamily="sans-serif-medium"
         android:textColorHint="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
@@ -40,6 +41,8 @@
         android:background="@drawable/ed_corner"
         android:hint="@string/last_name"
         android:padding="10dp"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/black"
         android:textColorHint="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edFirstName" />
@@ -51,7 +54,11 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/ed_corner"
         android:hint="@string/age"
+        android:inputType="number"
+        android:maxLength="2"
         android:padding="10dp"
+        android:textColor="@color/black"
+        android:fontFamily="sans-serif-medium"
         android:textColorHint="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edLastName" />
@@ -62,8 +69,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@drawable/ed_corner"
+        android:fontFamily="sans-serif-medium"
         android:hint="@string/email"
         android:padding="10dp"
+        android:textColor="@color/black"
         android:textColorHint="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edAge" />
@@ -74,6 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/active_users"
+        android:fontFamily="sans-serif-medium"
         android:textColor="@color/black"
         android:textSize="23sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,6 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
+        android:fontFamily="sans-serif-medium"
         android:text="@string/deleted_users"
         android:textColor="@color/black"
         android:textSize="23sp"
@@ -109,7 +120,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

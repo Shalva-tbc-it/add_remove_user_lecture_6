@@ -4,19 +4,24 @@ import android.app.Activity
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.annotation.RequiresApi
-import com.example.addremoveuser.databinding.ActivityUpdateBinding
+import com.example.addremoveuser.databinding.ActivityUpdateRemoveBinding
 
-class UpdateActivity : AppCompatActivity() {
+class RemoveUpdateActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityUpdateBinding
+    private lateinit var binding: ActivityUpdateRemoveBinding
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityUpdateBinding.inflate(layoutInflater)
+        binding = ActivityUpdateRemoveBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setUp()
+
+
+    }
+
+    private fun setUp() {
         val user = intent.getParcelableExtra<User>("clickedUser")
 
         binding.edFirstName.setText(user?.firstName)
@@ -28,7 +33,7 @@ class UpdateActivity : AppCompatActivity() {
         val removeBtn = binding.btnRemoveUser
 
         removeBtn.setOnClickListener {
-            val user1 = user?.id?.let {
+            val userForDelete = user?.id?.let {
                 User(
                     id = it,
                     firstName = binding.edFirstName.text.toString(),
@@ -38,7 +43,7 @@ class UpdateActivity : AppCompatActivity() {
                 )
             }
             val returnIntent = intent.apply {
-                putExtra("return_key", user1)
+                putExtra("return_key", userForDelete)
                 putExtra("action_key", true)
             }
             setResult(Activity.RESULT_OK, returnIntent)
@@ -46,21 +51,25 @@ class UpdateActivity : AppCompatActivity() {
         }
 
         updateBtn.setOnClickListener {
-            val user1 = user?.id?.let {
+            val userForUpdate = user?.id?.let {
                 User(
                     id = it,
-                    firstName = binding.edFirstName.text.toString(),
-                    lastName = binding.edLastName.text.toString(),
-                    age = binding.edAge.text.toString(),
-                    email = binding.edEmail.text.toString()
+                    firstName = removeSpaces(binding.edFirstName.text.toString()),
+                    lastName = removeSpaces(binding.edLastName.text.toString()),
+                    age = removeSpaces(binding.edAge.text.toString()),
+                    email = removeSpaces(binding.edEmail.text.toString())
                 )
             }
             val returnIntent = intent.apply {
-                putExtra("return_key", user1)
+                putExtra("return_key", userForUpdate)
                 putExtra("action_key", false)
             }
             setResult(Activity.RESULT_OK, returnIntent)
             finish()
         }
+    }
+
+    private fun removeSpaces(input: String): String {
+        return input.replace(" ", "")
     }
 }

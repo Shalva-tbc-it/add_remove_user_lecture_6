@@ -18,10 +18,10 @@ class UsersAdapter(private val listener: (User) -> Unit) :
         private val binding = UsersListBinding.bind(view)
 
         fun setUser(user: User) {
-            binding.tvFirstName.text = user.firstName
-            binding.tvLastName.text = user.lastName
-            binding.tvAge.text = user.age
-            binding.tvEmail.text = user.email
+            binding.tvFirstNameValue.text = user.firstName
+            binding.tvLastNameValue.text = user.lastName
+            binding.tvAgeValue.text = user.age
+            binding.tvEmailValue.text = user.email
             binding.viewHolder.setOnClickListener {
                 listener(user)
             }
