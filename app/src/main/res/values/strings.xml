@@ -7,8 +7,8 @@
     <string name="age">Age</string>
     <string name="email">Email</string>
     <string name="add_user">Add User</string>
-    <string name="remove_user">Remove User By Email</string>
-    <string name="update_user">Update User By Email</string>
+    <string name="remove_user">Remove User</string>
+    <string name="update_user">Update User</string>
     <string name="deleted_users">Deleted Users:</string>
     <string name="active_users">Active Users:</string>
 </resources>
