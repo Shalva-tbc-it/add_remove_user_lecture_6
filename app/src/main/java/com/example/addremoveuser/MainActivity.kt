@@ -1,13 +1,14 @@
 package com.example.addremoveuser
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.util.Log.d
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.addremoveuser.adapter.UsersAdapter
 import com.example.addremoveuser.databinding.ActivityMainBinding
@@ -23,19 +24,28 @@ class MainActivity : AppCompatActivity() {
 
     private var users = mutableMapOf<UUID, User>()
 
+    @SuppressLint("ResourceAsColor")
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
             val user: User? = data?.getParcelableExtra("return_key")
             val action = data?.getBooleanExtra("action_key", false)
+
             if (action == true) {
                 user?.let { removeUser(it.id) }
                 adapter.setData(users.values.toList())
                 activeUsersNum--
                 deletedUsersNum++
+                binding.tvActiveUser.text = getString(R.string.active_users) + activeUsersNum
+                binding.tvDeleteUser.text = getString(R.string.deleted_users) + deletedUsersNum
+                binding.tvTitle.text = getString(R.string.success)
+                binding.tvTitle.setTextColor(Color.GREEN)
+
             }else{
                 user?.let { updateUser(it.id, user) }
                 adapter.setData(users.values.toList())
+                binding.tvTitle.text = getString(R.string.success)
+                binding.tvTitle.setTextColor(Color.GREEN)
             }
         }
     }
@@ -49,6 +59,9 @@ class MainActivity : AppCompatActivity() {
             addUser = { id, user ->
                 addUser(id, user)
                 activeUsersNum++
+                binding.tvActiveUser.text = getString(R.string.active_users) + activeUsersNum
+                binding.tvTitle.text = getString(R.string.success)
+                binding.tvTitle.setTextColor(Color.GREEN)
             })
     }
 
@@ -64,21 +77,18 @@ class MainActivity : AppCompatActivity() {
         usersRecyclerView.layoutManager = LinearLayoutManager(this)
     }
 
-
-
-
-
     private fun onClick(addUser: (UUID, User) -> Unit) {
         binding.apply {
             btnAddUser.setOnClickListener {
                 saveUsers()
-                if (checkUser(isUser.id)) {
+                if (checkUser(isUser)) {
+                    binding.tvTitle.text = getString(R.string.error)
+                    binding.tvTitle.setTextColor(Color.RED)
                     Toast.makeText(this@MainActivity, "error", Toast.LENGTH_LONG).show()
                 } else {
                     addUser(isUser.id, isUser)
                     adapter.setData(users.values.toList())
-                    tvActiveUser.text = "Active: $activeUsersNum"
-                    Toast.makeText(this@MainActivity, "success", Toast.LENGTH_LONG).show()
+
                 }
             }
         }
@@ -101,8 +111,12 @@ class MainActivity : AppCompatActivity() {
         users.put(id, user)
     }
 
-    private fun checkUser(id: UUID): Boolean {
-        return users.contains(id)
+    private fun checkUser(user: User): Boolean {
+        var boolean = false
+        users.values.forEach{
+            boolean = it.email == user.email
+        }
+        return boolean
     }
 
     private fun removeUser(id: UUID) {

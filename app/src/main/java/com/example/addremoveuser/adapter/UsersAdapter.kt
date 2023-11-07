@@ -7,13 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.addremoveuser.R
 import com.example.addremoveuser.User
 import com.example.addremoveuser.databinding.UsersListBinding
-import java.util.UUID
 
 class UsersAdapter(private val listener: (User) -> Unit) :
     RecyclerView.Adapter<UsersAdapter.UsersHolder>() {
 
     private val usersList = ArrayList<User>()
-    private val usersUUID = User()
 
 
     inner class UsersHolder(view: View) : RecyclerView.ViewHolder(view) {
